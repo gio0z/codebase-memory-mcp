@@ -1,0 +1,28 @@
+name: intelligence-memory-omp
+
+on:
+  pull_request:
+    paths:
+      - 'omp/extension/workspace-provider.js'
+      - 'tests/omp_workspace_provider.test.mjs'
+      - '.github/workflows/intelligence-memory-omp.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'omp/extension/workspace-provider.js'
+      - 'tests/omp_workspace_provider.test.mjs'
+      - '.github/workflows/intelligence-memory-omp.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  provider-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+      - run: node --check omp/extension/workspace-provider.js
+      - run: node --test tests/omp_workspace_provider.test.mjs
